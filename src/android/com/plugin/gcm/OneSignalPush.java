@@ -68,6 +68,7 @@ public class OneSignalPush extends CordovaPlugin {
   public static final String PROMPT_LOCATION = "promptLocation";
   public static final String SET_EMAIL = "setEmail";
   public static final String SET_LOG_LEVEL = "setLogLevel";
+  public static final String CLEAR_ONESIGNAL_NOTIFICATIONS = "clearOneSignalNotifications";
   
   // This is to prevent an issue where if two Javascript calls are made to OneSignal expecting a callback then only one would fire.
   private static void callbackSuccess(CallbackContext callbackContext, JSONObject jsonObject) {
@@ -265,6 +266,14 @@ public class OneSignalPush extends CordovaPlugin {
         JSONObject jo = data.getJSONObject(0);
         OneSignal.setLogLevel(jo.getInt("logLevel"), jo.getInt("visualLevel"));
         } catch(Throwable t) {
+        t.printStackTrace();
+      }
+    }
+    else if (CLEAR_ONESIGNAL_NOTIFICATIONS.equals(action)) {
+      try {
+        OneSignal.clearOneSignalNotifications();
+        result = true;
+        } catch (Throwable t) {
         t.printStackTrace();
       }
     }
